@@ -1,0 +1,14 @@
+# Archivos y directorios a ignorar
+__pycache__
+.env
+venv
+*.pyc
+
+# Archivos generados por Streamlit
+.streamlit/
+
+# Entorno virtual de Python
+venv/
+
+# Archivos de log
+*.log
