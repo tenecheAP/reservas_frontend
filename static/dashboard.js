@@ -62,10 +62,11 @@ async function crearReserva(e, usuarioId) {
 
 async function cargarReservas(usuarioId) {
     try {
-        const response = await fetch(`${API_URL}/reservas/?usuario_id=${usuarioId}`);
+        const response = await fetch(`${API_URL}/reservas/`);
         if (response.ok) {
             const reservas = await response.json();
-            mostrarReservas(reservas);
+            const reservasFiltradas = reservas.filter(reserva => reserva.usuario_id === usuarioId);
+            mostrarReservas(reservasFiltradas);
         }
     } catch (error) {
         console.error('Error al cargar reservas:', error);
