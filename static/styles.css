@@ -259,3 +259,23 @@ button[type="submit"]:hover {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     padding: 1rem;
 }
+
+.toggle-btn {
+    background: none;
+    border: none;
+    color: #007bff;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0.5rem;
+    width: 100%;
+    text-align: left;
+}
+
+.toggle-btn:hover {
+    color: #0056b3;
+}
+
+.reservas-list {
+    transition: all 0.3s ease-in-out;
+}

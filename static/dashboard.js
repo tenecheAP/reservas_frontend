@@ -121,3 +121,18 @@ function cerrarSesion() {
     sessionStorage.removeItem('usuario');
     window.location.href = 'login.html';
 }
+
+function toggleReservas() {
+    const reservasList = document.getElementById('reservasList');
+    const toggleBtn = document.getElementById('toggleReservasBtn');
+    
+    if (reservasList.style.display === 'none') {
+        reservasList.style.display = 'block';
+        toggleBtn.innerHTML = 'Mis Reservas ▲';
+        const usuario = JSON.parse(sessionStorage.getItem('usuario'));
+        cargarReservas(usuario.id);
+    } else {
+        reservasList.style.display = 'none';
+        toggleBtn.innerHTML = 'Mis Reservas ▼';
+    }
+}

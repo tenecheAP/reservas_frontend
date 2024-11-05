@@ -49,8 +49,12 @@
                     </form>
                 </div>
                 <div class="card">
-                    <h2>Mis Reservas</h2>
-                    <div id="reservasList" class="reservas-list"></div>
+                    <h2>
+                        <button onclick="toggleReservas()" class="toggle-btn" id="toggleReservasBtn">
+                            Mis Reservas ▼
+                        </button>
+                    </h2>
+                    <div id="reservasList" class="reservas-list" style="display: none;"></div>
                 </div>
             </div>
         </main>
