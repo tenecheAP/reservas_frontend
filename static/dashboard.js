@@ -17,12 +17,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     cargarReservas(usuario.id);
 
+    const fechaInicio = document.getElementById('fecha_inicio');
+    const fechaFin = document.getElementById('fecha_fin');
+    const hoy = new Date().toISOString().split('T')[0];
+    
+    fechaInicio.min = hoy;
+    fechaFin.min = hoy;
+
+    fechaInicio.addEventListener('change', () => {
+        fechaFin.min = fechaInicio.value;
+        if (fechaFin.value && fechaFin.value < fechaInicio.value) {
+            fechaFin.value = fechaInicio.value;
+        }
+    });
+
     const reservaForm = document.getElementById('reservaForm');
     reservaForm.addEventListener('submit', (e) => crearReserva(e, usuario.id));
 });
 
 async function crearReserva(e, usuarioId) {
     e.preventDefault();
+
+    const fechaInicio = new Date(document.getElementById('fecha_inicio').value);
+    const fechaFin = new Date(document.getElementById('fecha_fin').value);
+
+    if (fechaFin < fechaInicio) {
+        alert('La fecha final no puede ser menor que la fecha inicial');
+        return;
+    }
 
     const reservaData = {
         usuario_id: usuarioId,
@@ -32,9 +54,10 @@ async function crearReserva(e, usuarioId) {
         tipo_reserva: document.getElementById('tipo_reserva').value,
         ubicacion_camping: document.getElementById('ubicacion_camping').value,
         estado: "Confirmada",
-        capacidad_carpa: 1,
+        capacidad_carpa: parseInt(document.getElementById('cantidad_personas').value),
         cantidad_comidas: 1,
-        costo_total: 100.0
+        costo_total: 100.0,
+        id_camping: 1
     };
 
     try {
@@ -52,7 +75,7 @@ async function crearReserva(e, usuarioId) {
             e.target.reset();
         } else {
             const error = await response.json();
-            alert('Error al crear la reserva: ' + error.detail);
+            alert('Error al crear la reserva: ' + (error.detail || JSON.stringify(error)));
         }
     } catch (error) {
         console.error('Error:', error);
