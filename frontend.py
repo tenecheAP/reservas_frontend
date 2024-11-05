@@ -1,3 +1,7 @@
+import streamlit as st
+
+user_authenticated = False  # Definir la variable user_authenticated como False por defecto
+
 # Título principal
 st.title("Sistema de Reservas de Camping")
 
