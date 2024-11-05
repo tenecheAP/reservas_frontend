@@ -1,4 +1,5 @@
 import streamlit as st
+import requests
 
 user_authenticated = False  # Definir la variable user_authenticated como False por defecto
 
@@ -20,6 +21,7 @@ with tab1:
         
         if success:
             st.success("Inicio de sesión exitoso!")
+            user_authenticated = True
         else:
             st.error("Inicio de sesión fallido. Verifica tus credenciales.")
     
@@ -28,6 +30,7 @@ with tab1:
         
         if success:
             st.success("Usuario registrado exitosamente!")
+            user_authenticated = True
         else:
             st.error("Error al registrar usuario. Inténtalo de nuevo.")
 
@@ -40,3 +43,29 @@ if user_authenticated:
 else:
     # Mostrar mensaje para iniciar sesión o registrarse
     st.warning("Debes iniciar sesión o registrarte para hacer una reserva.")
+
+# Enviar solicitud al backend para crear una reserva
+if user_authenticated and st.button("Hacer Reserva"):
+    reserva_data = {
+        "fechaInicio": "2022-12-01",
+        "fechaFin": "2022-12-05",
+        "cantidadPersonas": 4,
+        "tipoReserva": "Premium",
+        "capacidadCarpa": 2,
+        "cantidadComidas": 10
+    }
+
+    backend_url = "http://localhost:8000/reservas/"
+    response = requests.post(backend_url, json=reserva_data)
+
+    if response.status_code == 200:
+        st.success("Reserva creada exitosamente!")
+    else:
+        st.error("Error al crear la reserva. Inténtalo de nuevo.")
+
+def autenticar_usuario(credentials):
+    # Lógica para autenticar al usuario
+    if credentials["username"] == "usuario_ejemplo" and credentials["password"] == "contraseña_ejemplo":
+        return True, {"user_id": 123, "email": "usuario@example.com"}
+    else:
+        return False, None
